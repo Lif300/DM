@@ -6,4 +6,109 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+    <ScrollView
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="71dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="110dp"
+                >
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-black"
+                    android:gravity="center"
+                    android:text="My Market"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="45dp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="Inicio de sesión"
+                android:textSize="25dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="70dp" />
+
+            <EditText
+                android:id="@+id/txtEmail"
+                android:layout_width="308dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textEmailAddress"
+                android:hint="Correo" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="308dp"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true"
+
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtPass"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Contraseña"
+                    android:inputType="textPassword"
+                    app:passwordToggleEnabled="true">
+
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <Button
+                android:id="@+id/btnRegistrar"
+                style="?android:attr/borderlessButtonStyle"
+                android:fontFamily="sans-serif-black"
+                android:layout_width="wrap_content"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#fffafa"
+                android:text="¿No estás registrado? Presiona aquí."
+                android:textColor="#add8e6" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="45dp" />
+
+            <Button
+                android:id="@+id/btnIniciar"
+                android:layout_width="246dp"
+                android:layout_height="38dp"
+                android:background="#add8e6"
+                android:text="Iniciar Sesión"
+                android:textAllCaps="false"
+                android:textColor="#fffafa" />
+
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
