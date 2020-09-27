@@ -63,8 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                email = mtxtCorreo.getText().toString();
                pass = mtxtContra.getText().toString();
                if(!email.isEmpty() && !pass.isEmpty()){
-                   iniciarSesion();
-
+                    SignInWithEmailAndPassword(email, pass);
                }else{
                    Toast.makeText(LoginActivity.this, "Favor de llenar todos los datos", Toast.LENGTH_SHORT).show();
                }
@@ -73,33 +72,49 @@ public class LoginActivity extends AppCompatActivity {
        });
     }
 
-    private void iniciarSesion() {
-        fAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Log.d(TAG, "signInWithEmail:success");
-                    FirebaseUser user = fAuth.getCurrentUser();
+    public void SignInWithEmailAndPassword(String email, String password){
+        fAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = fAuth.getCurrentUser();
+                            updateUI(user);
+                            if(user.isEmailVerified()) {
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Favor de verificar su cuenta.", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
 
-                    updateUI(user);
-                }else{
-                    Toast.makeText(LoginActivity.this, "Correo y/o contraseña incorrectos", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+                        // ...
+                    }
+                });
     }
 
-   @Override
+    @Override
     protected void onStart() {
         super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = fAuth.getCurrentUser();
         updateUI(currentUser);
+        if(currentUser != null){
+            FirebaseAuth.getInstance().signOut();
+        }
     }
-    public void  updateUI(FirebaseUser account){
-    if(account != null){
-        Toast.makeText(this,"Inicio de sesión satisfactorio",Toast.LENGTH_LONG).show();
-        startActivity(new Intent(this,MainActivity.class));
-        finish();
+
+    private void updateUI(FirebaseUser user) {
+        Log.i("User", "CurrentUser: "+currentUser);
     }
-}
+
+
 }

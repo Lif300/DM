@@ -9,14 +9,28 @@
     >
 
 
+    <Button
+        android:id="@+id/btnRegresar"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/flechita"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.083"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.459" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="357dp"
         android:layout_height="58dp"
         android:layout_marginTop="96dp"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/micross"
         android:gravity="center"
-        android:text="Crear una cuenta nueva"
+        android:text="Regístrate"
         android:textColor="@color/colorAccent"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,140 +38,162 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:foregroundGravity="center"
-    android:layout_marginTop="210dp"
-    android:layout_marginLeft="6dp"
-        android:gravity="center"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
         android:layout_width="410dp"
-        android:layout_height="508dp"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical"
+        android:layout_height="538dp"
+        android:foregroundGravity="center"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:orientation="horizontal"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
+            android:layout_width="410dp"
+            android:layout_height="508dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
+
 
             <EditText
                 android:id="@+id/txtNombre"
-                android:layout_width="145dp"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:fontFamily="@font/micross"
                 android:hint="Nombre"
+                android:backgroundTint="#41D4A9"
                 android:inputType="textPersonName" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
 
             <EditText
                 android:id="@+id/txtApellido"
-                android:layout_width="145dp"
+                android:layout_width="350dp"
+                android:backgroundTint="#41D4A9"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:fontFamily="@font/micross"
                 android:hint="Apellido"
                 android:inputType="textPersonName" />
-        </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="45dp" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
+            <EditText
+                android:id="@+id/txtTel"
+                android:backgroundTint="#41D4A9"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:fontFamily="@font/micross"
+                android:hint="Teléfono (Opcional)"
+                android:inputType="phone" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
 
             <EditText
                 android:id="@+id/txtCorreo"
-                android:layout_width="match_parent"
+                android:backgroundTint="#41D4A9"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:fontFamily="@font/micross"
                 android:hint="Correo"
                 android:inputType="textEmailAddress" />
-        </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="45dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="2dp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="319dp"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#41D4A9"
+                android:backgroundTint="#41D4A9"
 
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txtContra"
-                    android:layout_width="312dp"
+                    android:backgroundTint="#41D4A9"
+                    android:layout_width="350dp"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/micross"
                     android:hint="Contraseña"
-                    android:inputType="textPassword"
-                    app:passwordToggleEnabled="true">
+                    android:inputType="textPassword">
 
                 </com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="2dp" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="120dp" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#41D4A9"
+                android:backgroundTint="#41D4A9"
+                >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="53dp"
-            android:orientation="horizontal"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtContraConf"
+                    android:layout_width="350dp"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/micross"
+                    android:backgroundTint="#41D4A9"
+                    android:hint="Confirmar contraseña"
+                    android:inputType="textPassword">
 
-            <Button
-                android:id="@+id/btnConfirmar"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_weight="1"
-                android:background="#add8e6"
-                android:shadowColor="#fffafa"
-                android:text="Confirmar"
-                android:textColor="#fffafa" />
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+
+                android:gravity="center"
+                android:fontFamily="@font/micross"
+                android:id="@+id/visibleono"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FE4A49"
+                android:visibility="invisible"
+                android:text="Las contraseñas no coinciden." />
 
             <Space
-                android:layout_width="5dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
 
-            <Button
-                android:id="@+id/btnRegresar"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_weight="1"
-                android:background="#add8e6"
-                android:shadowColor="#fffafa"
-                android:text="Regresar"
-                android:textColor="#fffafa" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnConfirmar"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="231dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/boton2"
+                    android:text="Confirmar"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
