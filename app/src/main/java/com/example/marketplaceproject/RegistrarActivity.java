@@ -106,6 +106,7 @@ public class RegistrarActivity extends AppCompatActivity {
                     FirebaseUser user = fAuth.getCurrentUser();
                     updateUI(user);
 
+
                     Map<String, Object> map = new HashMap<>();
                     map.put("nombre", nombre);
                     map.put("telefono", tel);
@@ -136,6 +137,7 @@ public class RegistrarActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -144,6 +146,8 @@ public class RegistrarActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser currentUser) {
-        Log.i("User:", ""+currentUser);
+            Log.i("User:", ""+currentUser);
     }
+
+
 }

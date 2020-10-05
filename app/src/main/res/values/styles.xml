@@ -17,6 +17,33 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Navigationyea" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/micross</item>
+    </style>
+
+
+
+    <style name="ToolBarStyle" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">#5D737E</item>
+        <item name="android:fontFamily">@font/micross</item>
+        <item name="android:textColorSecondary">#5D737E</item>
+        <item name="actionMenuTextColor">#5D737E</item>
+        <item name="android:textSize">28dp</item>
+        <!-- -
+        <item name="actionOverflowButtonStyle">@style/ActionButtonOverflowStyle</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <!- -->
+
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>
