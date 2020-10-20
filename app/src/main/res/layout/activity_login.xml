@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
-    android:background="@drawable/background1">
+    android:background="@drawable/background1"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
 
     <ScrollView
         android:id="@+id/scrollView3"
@@ -111,6 +113,7 @@
         android:layout_width="231dp"
         android:layout_height="50dp"
         android:layout_marginTop="450dp"
+        android:textSize="14dp"
         android:text="Iniciar Sesión"
         android:fontFamily="@font/micross"
         android:textAllCaps="false"

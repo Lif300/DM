@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".agregarart"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
+
+    <EditText
+        android:id="@+id/txtDescripcionArt"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#41D4A9"
+        android:ems="10"
+        android:fontFamily="@font/micross"
+        android:hint="Descipción"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/btnAgregarArt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNombreArt"
+        app:layout_constraintVertical_bias="0.068" />
+
+    <EditText
+
+        android:id="@+id/txtPrecio"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#41D4A9"
+        android:ems="10"
+        android:fontFamily="@font/micross"
+        android:hint="Precio (MXN)"
+        android:inputType="phone"
+        app:layout_constraintBottom_toTopOf="@+id/btnAgregarArt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNombreArt"
+        app:layout_constraintVertical_bias="0.31" />
+
+    <EditText
+        android:id="@+id/txtNombreArt"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="244dp"
+        android:layout_marginBottom="364dp"
+        android:backgroundTint="#41D4A9"
+        android:ems="10"
+        android:fontFamily="@font/micross"
+        android:hint="Nombre"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/btnGuardarCambios"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.892" />
+
+    <Button
+        android:id="@+id/btnAgregarArt"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="231dp"
+        android:layout_height="50dp"
+        android:background="@drawable/boton2"
+        android:text="Agregar"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.913" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/fotoArt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.124" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/micross"
+        android:text="(Al presionar agregar, podrás elegir una foto para tu articulo)"
+        android:textColor="@color/colorLetras"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAgregarArt"
+        app:layout_constraintVertical_bias="0.444" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,44 +2,82 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
+    android:layout_marginTop="15dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:layout_height="100dp"
+    android:padding="8dp"
+    android:id="@+id/item_contact">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleImgView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:civ_border_width="2dp"
-        android:background="@color/colorLetras"/>
-    
+        android:layout_gravity="center"
+        android:id="@+id/circle2"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:civ_border_width="0dp"/>
+
     <LinearLayout
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/txtTitulo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textSize="20sp"
-            android:textColor="@color/colorLetras"
-            android:fontFamily="@font/micross"
-            android:text="Luis Barrón"/>
+        <LinearLayout
+            android:layout_width="141dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtDescripcion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textSize="14sp"
-            android:textColor="@color/colorLetras"
-            android:fontFamily="@font/micross"
-            android:text="A 5 km"/>
+            <TextView
+                android:id="@+id/txtheader2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/micross"
+                android:text="Luis Barrón"
+                android:textColor="@color/colorLetras"
+                android:textSize="23sp" />
 
+            <TextView
+                android:id="@+id/txtdescr2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/micross"
+                android:text="A 5 km"
+                android:textColor="@color/colorLetras"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/txtprecio2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/micross"
+                android:text="5000 MXN"
+                android:textColor="@color/colorLetras"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="177dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtusuario2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/micross"
+                android:text="En venta por: Luis Barrón"
+                android:textColor="@color/colorLetras"
+                android:textSize="12sp" />
+        </LinearLayout>
 
 
     </LinearLayout>
+
 
 </androidx.appcompat.widget.LinearLayoutCompat>

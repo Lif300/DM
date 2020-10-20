@@ -3,18 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/inicio"
             android:icon="@drawable/icon_awesome_home"
-            android:title="@string/menu_home" />
+            android:title="@string/menu_inicio" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/perfil"
             android:icon="@drawable/ic_baseline_account_circle_24"
-            android:title="@string/menu_gallery" />
+            android:title="@string/menu_perfil" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/articulos"
             android:icon="@drawable/ic_baseline_attach_money_24"
-            android:title="@string/menu_slideshow" />
+            android:title="@string/menu_articulos" />
     </group>
+
+
+ <item android:title="">
+     <menu>
+         <group android:checkableBehavior="single">
+             <item
+                 android:id="@+id/logout"
+                 android:icon="@drawable/ic_baseline_exit_to_app_24"
+                 android:title="@string/menu_logout" />
+
+         </group>
+     </menu>
+ </item>
+
 </menu>

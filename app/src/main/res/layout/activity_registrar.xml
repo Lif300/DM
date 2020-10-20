@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegistrarActivity"
-
-    >
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"    >
 
 
     <Button
@@ -187,6 +187,7 @@
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="231dp"
                     android:layout_height="50dp"
+                    android:textSize="17dp"
                     android:background="@drawable/boton2"
                     android:text="Confirmar"
                     android:textColor="#FFFFFF" />

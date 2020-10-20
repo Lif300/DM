@@ -79,10 +79,11 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
+
                             FirebaseUser user = fAuth.getCurrentUser();
                             updateUI(user);
                             if(user.isEmailVerified()) {
+                                Log.d("Inicio de sesión", "Exitoso");
                                 startActivity(new Intent(LoginActivity.this, SideBarActivity.class));
                                 finish();
                             } else {
@@ -90,8 +91,8 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                           Log.d("Inicio de sesión", "Fallido");
+                            Toast.makeText(LoginActivity.this, "Contraseña/Correo incorrectos.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
