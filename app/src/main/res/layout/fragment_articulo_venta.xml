@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".articuloVenta">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/fotoArtVendido"
+        android:layout_width="135dp"
+        android:layout_height="113dp"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.075" />
+
+    <TextView
+        android:id="@+id/txtNombreArtVenta"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorLetras"
+        android:fontFamily="@font/micross"
+        android:text="Nombre del artículo"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.426"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fotoArtVendido"
+        app:layout_constraintVertical_bias="0.132" />
+
+    <TextView
+        android:id="@+id/txtLabelNombre"
+        android:layout_width="360dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="4dp"
+        android:background="#f0f0f0"
+        android:fontFamily="@font/micross"
+        android:paddingStart="3dp"
+        android:text="Nombre del artículo"
+        android:textColor="#0A0908"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNombreArtVenta" />
+
+    <TextView
+        android:id="@+id/txtLabelDesc"
+        android:layout_width="360dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="12dp"
+        android:background="#f0f0f0"
+        android:fontFamily="@font/micross"
+        android:paddingStart="3dp"
+        android:text="Descripción del artículo"
+        android:textColor="#0A0908"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+
+        android:id="@+id/txtPrecioVenta"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/micross"
+        android:text="Precio (MXN)"
+        android:textColor="@color/colorLetras"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.426"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLabelDesc"
+        app:layout_constraintVertical_bias="0.016" />
+
+    <TextView
+        android:id="@+id/txtLabelPrecio"
+        android:layout_width="360dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="4dp"
+        android:background="#f0f0f0"
+        android:fontFamily="@font/micross"
+        android:paddingStart="3dp"
+        android:text="Precio del artículo"
+        android:textColor="#0A0908"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPrecioVenta" />
+
+    <Button
+        android:id="@+id/btnVerInformación"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="299dp"
+        android:layout_height="48dp"
+        android:background="@drawable/boton2"
+        android:text="Ver Información del vendedor"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.913" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="358dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/micross"
+        android:text="Descripcion"
+        android:textColor="@color/colorLetras"
+        android:textSize="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLabelNombre" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

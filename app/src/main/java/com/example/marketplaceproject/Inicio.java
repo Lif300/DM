@@ -34,6 +34,15 @@ import static android.content.ContentValues.TAG;
  * create an instance of this fragment.
  */
 public class Inicio extends Fragment {
+    String foods;
+
+    public String getFoods() {
+        return foods;
+    }
+
+    public void setFoods(String foods) {
+        this.foods = foods;
+    }
 
     private FirebaseUser firebaseUser;
     private String uid;
@@ -52,6 +61,7 @@ public class Inicio extends Fragment {
 
     RecyclerView recyclerView;
     ArrayList<datamodel2> dataholder2;
+
 
     public Inicio() {
         // Required empty public constructor
@@ -123,10 +133,12 @@ public class Inicio extends Fragment {
                             datamodel2 datamodel2 = new datamodel2();
                             //Life: Si quieres agregar un dato como el nombre de usuario o correo, sácalo del
                             //snapshot 1 (como el bloque de comentario abajo, lit igualito).
+                            datamodel2.setPushid(currentArticulos);
                             datamodel2.setImageurl(snapshot2.child("imageurl").getValue(String.class));
                             datamodel2.setDescr(snapshot2.child("descripcion").getValue(String.class));
                             datamodel2.setHeader(snapshot2.child("nombre").getValue(String.class));
                             datamodel2.setPrec(snapshot2.child("precio").getValue(String.class));
+                            datamodel2.setUserid(snapshot1.getKey());
                             String nombreCompleto = snapshot1.child("nombre").getValue(String.class);
                             nombreCompleto = nombreCompleto + " " + snapshot1.child("apellido").getValue(String.class);
                             datamodel2.setUsuario("En venta por: "+nombreCompleto);

@@ -1,25 +1,36 @@
 package com.example.marketplaceproject;
 
 public class datamodel2 {
-    String header, descr, prec, imageurl, usuario;
+    String header, descr, prec, imageurl, usuario, pushid, userid;
 
     public datamodel2(){
 
     }
 
-    public datamodel2(String header, String descr, String prec, String imageurl, String usuario) {
+    public datamodel2(String header, String descr, String prec, String imageurl, String usuario, String pushid) {
         this.header = header;
         this.descr = descr;
         this.prec = prec;
         this.imageurl = imageurl;
         this.usuario = usuario;
+        this.pushid = pushid;
+        this.userid = userid;
     }
 
-    public datamodel2(String header, String descr, String prec, String imageurl) {
-        this.header = header;
-        this.descr = descr;
-        this.prec = prec;
-        this.imageurl = imageurl;
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public String getPushid() {
+        return pushid;
+    }
+
+    public void setPushid(String pushid) {
+        this.pushid = pushid;
     }
 
     public String getPrec() {
@@ -36,12 +47,6 @@ public class datamodel2 {
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
-    }
-
-    public datamodel2(String header, String descr, String imageurl){
-        this.header = header;
-        this.descr = descr;
-        this.imageurl = imageurl;
     }
 
     public String getHeader() {

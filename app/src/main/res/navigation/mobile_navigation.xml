@@ -10,7 +10,11 @@
         android:id="@+id/inicio"
         android:name="com.example.marketplaceproject.Inicio"
         android:label="@string/menu_inicio"
-        tools:layout="@layout/fragment_inicio" />
+        tools:layout="@layout/fragment_inicio" >
+        <action
+            android:id="@+id/action_inicio_to_articuloVenta"
+            app:destination="@id/articuloVenta" />
+    </fragment>
     <fragment
         android:id="@+id/perfil"
         android:name="com.example.marketplaceproject.Perfil"
@@ -33,6 +37,27 @@
         <action
             android:id="@+id/action_agregarart_to_articulos"
             app:destination="@id/articulos" />
+    </fragment>
+    <fragment
+        android:id="@+id/articuloVenta"
+        android:name="com.example.marketplaceproject.articuloVenta"
+        android:label="@string/articulo_seleccionado"
+        tools:layout="@layout/fragment_articulo_venta" >
+        <action
+            android:id="@+id/action_articuloVenta_to_inicio"
+            app:destination="@id/inicio" />
+        <action
+            android:id="@+id/action_articuloVenta_to_perfilVendedor"
+            app:destination="@id/perfilVendedor" />
+    </fragment>
+    <fragment
+        android:id="@+id/perfilVendedor"
+        android:name="com.example.marketplaceproject.perfilVendedor"
+        android:label="@string/vendedor"
+        tools:layout="@layout/fragment_perfil_vendedor" >
+        <action
+            android:id="@+id/action_perfilVendedor_to_articuloVenta"
+            app:destination="@id/articuloVenta" />
     </fragment>
 
 

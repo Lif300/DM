@@ -74,6 +74,29 @@
                 android:text="En venta por: Luis Barrón"
                 android:textColor="@color/colorLetras"
                 android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txtpushid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/micross"
+                android:text="En venta por: Luis Barrón"
+                android:textColor="@color/colorLetras"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txtuserid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/micross"
+                android:text="En venta por: Luis Barrón"
+                android:textColor="@color/colorLetras"
+                android:textSize="12sp" />
+
         </LinearLayout>
 
 

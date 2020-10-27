@@ -17,7 +17,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/micross"
-        android:text="Objetos en venta cerca de tu ubicación:"
+        android:text="Artículos en venta:"
         android:textAlignment="textStart"
         android:textColor="@color/colorLetras"
         android:textSize="16sp"

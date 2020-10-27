@@ -12,6 +12,8 @@
     <string name="menu_perfil">Perfil</string>
     <string name="menu_articulos">Mis artículos</string>
     <string name="menu_agregararticulos">Agregar artículo</string>
+    <string name="articulo_seleccionado">Información del artículo</string>
+    <string name="vendedor">Información del vendedor</string>
     <string name="menu_logout">Cerrar sesión</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
