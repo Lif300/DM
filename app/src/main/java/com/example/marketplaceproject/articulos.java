@@ -127,6 +127,7 @@ public class articulos extends Fragment {
                     datamodel.setDescr(snapshot1.child("descripcion").getValue(String.class));
                     datamodel.setHeader(snapshot1.child("nombre").getValue(String.class));
                     datamodel.setPrec(snapshot1.child("precio").getValue(String.class));
+                    datamodel.setPushid(snapshot1.getKey());
                     dataholder.add(datamodel); //se agregan al datamodel.
                 }
 

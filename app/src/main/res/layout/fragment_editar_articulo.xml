@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".editarArticulo">
+
+    <Button
+        android:id="@+id/btnEditFotoArt"
+        android:layout_width="27dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="88dp"
+        android:background="@drawable/ic_menu_camera"
+        android:backgroundTint="#5d737e"
+        app:layout_constraintStart_toStartOf="@+id/fotoEditArt"
+        app:layout_constraintTop_toTopOf="@+id/fotoEditArt"
+        tools:ignore="OnClick" />
+
+    <EditText
+        android:id="@+id/txtDescripcionArtEdit"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#41D4A9"
+        android:ems="10"
+        android:fontFamily="@font/micross"
+        android:hint="Descipción"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/btnGuardarArt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNombreArtEdit"
+        app:layout_constraintVertical_bias="0.133" />
+
+    <EditText
+
+        android:id="@+id/txtPrecioEdit"
+
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:backgroundTint="#41D4A9"
+        android:ems="10"
+        android:fontFamily="@font/micross"
+        android:hint="Precio (MXN)"
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtDescripcionArtEdit" />
+
+    <EditText
+        android:id="@+id/txtNombreArtEdit"
+
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="264dp"
+        android:backgroundTint="#41D4A9"
+        android:ems="10"
+        android:fontFamily="@font/micross"
+        android:hint="Nombre"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnGuardarArt"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="231dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/boton2"
+        android:text="Guardar"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/fotoEditArt"
+
+        android:layout_width="107dp"
+        android:layout_height="107dp"
+        android:layout_marginTop="76dp"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

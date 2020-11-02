@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_articulos_to_agregarart"
             app:destination="@id/agregarart" />
+        <action
+            android:id="@+id/action_articulos_to_editarArticulo"
+            app:destination="@id/editarArticulo" />
     </fragment>
     <fragment
         android:id="@+id/agregarart"
@@ -58,6 +61,15 @@
         <action
             android:id="@+id/action_perfilVendedor_to_articuloVenta"
             app:destination="@id/articuloVenta" />
+    </fragment>
+    <fragment
+        android:id="@+id/editarArticulo"
+        android:name="com.example.marketplaceproject.editarArticulo"
+        android:label="fragment_editar_articulo"
+        tools:layout="@layout/fragment_editar_articulo" >
+        <action
+            android:id="@+id/action_editarArticulo_to_articulos"
+            app:destination="@id/articulos" />
     </fragment>
 
 

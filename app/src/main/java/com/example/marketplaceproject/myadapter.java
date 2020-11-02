@@ -3,6 +3,7 @@ package com.example.marketplaceproject;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,7 +68,7 @@ public class myadapter extends RecyclerView.Adapter<myadapter.myviewholder>{
         holder.header.setText(dataholder.get(position).getHeader());
         holder.descr.setText(dataholder.get(position).getDescr());
         holder.price.setText(dataholder.get(position).getPrec());
-
+        holder.pushid1.setText(dataholder.get(position).getPushid());
         holder.header.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) { //Si el usuario mantiene presionado el articulo, este podrá ser eliminado.
@@ -123,6 +124,30 @@ public class myadapter extends RecyclerView.Adapter<myadapter.myviewholder>{
             }
         });
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView mtxtPrecio = (TextView) v.findViewById(R.id.txtprecio1);
+                TextView mtxtPushId = (TextView) v.findViewById(R.id.txtpushid1);
+                TextView mtxtNombre = (TextView) v.findViewById(R.id.txtheader1);
+                TextView mtxtDescr = (TextView) v.findViewById(R.id.txtdescr1);
+
+                String precio = mtxtPrecio.getText().toString();
+                String pushid = mtxtPushId.getText().toString();
+                String nombre = mtxtNombre.getText().toString();
+                String descr = mtxtDescr.getText().toString();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("precio", precio);
+                bundle.putString("pushid", pushid);
+                bundle.putString("nombre", nombre);
+                bundle.putString("desc", descr);
+                Log.d("LOGTAG", "clicked : name "+mtxtPushId.getText().toString());
+                Navigation.findNavController(v).navigate(R.id.editarArticulo, bundle);
+            }
+        });
+
+
     }
 
     @Override
@@ -132,7 +157,7 @@ public class myadapter extends RecyclerView.Adapter<myadapter.myviewholder>{
 
     class myviewholder extends RecyclerView.ViewHolder{
         CircleImageView CircleImg;
-        TextView header, descr, price;
+        TextView header, descr, price, pushid1;
 
         public myviewholder(@NonNull View itemView) {
             super(itemView);
@@ -140,6 +165,7 @@ public class myadapter extends RecyclerView.Adapter<myadapter.myviewholder>{
             header = itemView.findViewById(R.id.txtheader1);
             descr = itemView.findViewById(R.id.txtdescr1);
             price = itemView.findViewById(R.id.txtprecio1);
+            pushid1 = itemView.findViewById(R.id.txtpushid1);
 
         }
     }

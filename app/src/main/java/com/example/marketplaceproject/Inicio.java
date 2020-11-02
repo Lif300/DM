@@ -1,5 +1,6 @@
 package com.example.marketplaceproject;
 
+import android.Manifest;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -14,6 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +29,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -34,16 +47,6 @@ import static android.content.ContentValues.TAG;
  * create an instance of this fragment.
  */
 public class Inicio extends Fragment {
-    String foods;
-
-    public String getFoods() {
-        return foods;
-    }
-
-    public void setFoods(String foods) {
-        this.foods = foods;
-    }
-
     private FirebaseUser firebaseUser;
     private String uid;
 
@@ -125,8 +128,8 @@ public class Inicio extends Fragment {
                     /**/
 
                     if(!snapshot1.getKey().equals(uid)){
-                            //String currentArticulos = snapshot1.child("articulos").getKey();
-                            //Log.d(TAG, "Articulos push.id: " + currentArticulos);
+                        //String currentArticulos = snapshot1.child("articulos").getKey();
+                        //Log.d(TAG, "Articulos push.id: " + currentArticulos);
                         for(DataSnapshot snapshot2 : snapshot1.child("articulos").getChildren()){
                             String currentArticulos = snapshot2.getKey();
                             Log.d(TAG, "Articulos push.id: " + currentArticulos);

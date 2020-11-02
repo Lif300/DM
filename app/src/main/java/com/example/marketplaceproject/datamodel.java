@@ -2,17 +2,26 @@ package com.example.marketplaceproject;
 
 public class datamodel {
 
-    String header, descr, prec, imageurl;
+    String header, descr, prec, imageurl, pushid;
 
     public datamodel(){
 
     }
 
-    public datamodel(String header, String descr, String prec, String imageurl) {
+    public datamodel(String header, String descr, String prec, String imageurl, String pushid) {
         this.header = header;
         this.descr = descr;
         this.prec = prec;
         this.imageurl = imageurl;
+        this.pushid = pushid;
+    }
+
+    public String getPushid() {
+        return pushid;
+    }
+
+    public void setPushid(String pushid) {
+        this.pushid = pushid;
     }
 
     public String getHeader() {
