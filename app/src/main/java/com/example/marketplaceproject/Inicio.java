@@ -1,26 +1,42 @@
 package com.example.marketplaceproject;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +50,9 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.SnackbarOnAnyDeniedMultiplePermissionsListener;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -46,9 +64,16 @@ import static android.content.ContentValues.TAG;
  * Use the {@link Inicio#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Inicio extends Fragment {
+public class Inicio extends Fragment{
     private FirebaseUser firebaseUser;
     private String uid;
+    TextView txtLong, txtLat;
+
+
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private LocationRequest locationRequest;
+    private LocationCallback locationCallback;
+    private LocationManager locationManager;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,8 +83,22 @@ public class Inicio extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private DatabaseReference myRef;
+    private DatabaseReference myRef, onlineRef, currentUserRef, usuarioslocalizacionRef;
+    private GeoFire geoFire;
     private Context mContext;
+    ValueEventListener onlineValueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if(snapshot.exists()){
+                currentUserRef.onDisconnect().removeValue();
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+            Snackbar.make(getView(), error.getMessage(), Snackbar.LENGTH_LONG).show();
+        }
+    };
     private myadapter2 myadapter2;
 
     RecyclerView recyclerView;
@@ -88,6 +127,7 @@ public class Inicio extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +135,51 @@ public class Inicio extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+    }
+
+    private void showSettingsDialog() { //Mensaje de dialogo por si no acepta los permisos
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Permiso requerido");
+        builder.setMessage("Esta aplicación necesita el permiso solicitado para funcionar.");
+        builder.setPositiveButton("Ir a configuración", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                openSettings();
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
+    private void openSettings() { // Ir al menu de configuración de la app
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+        intent.setData(uri);
+        startActivityForResult(intent, 101);
+    }
+
+    @Override
+    public void onDestroy() {
+        geoFire.removeLocation(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        onlineRef.removeEventListener(onlineValueEventListener);
+        super.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        registerOnlyneSystem();
+    }
+
+    private void registerOnlyneSystem() {
+        onlineRef.addValueEventListener(onlineValueEventListener);
     }
 
     @Override
@@ -103,6 +187,60 @@ public class Inicio extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_inicio, container, false);
+        onlineRef = FirebaseDatabase.getInstance().getReference().child(".info/connected");
+        usuarioslocalizacionRef = FirebaseDatabase.getInstance().getReference("UsuariosLocation");
+        currentUserRef = FirebaseDatabase.getInstance().getReference("UsuariosLocation").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        geoFire = new GeoFire(usuarioslocalizacionRef);
+        registerOnlyneSystem();
+
+
+        txtLong = view.findViewById(R.id.txtLongitud);
+        txtLat = view.findViewById(R.id.txtLatitud);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        //Permisos para la ubicación.
+        Dexter.withContext(getContext())
+                .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+
+                        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                                != PackageManager.PERMISSION_GRANTED &&
+                                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                                        != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            return;
+                        }
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000,
+                                3, mLocationListener);
+                        Toast.makeText(getContext(), "Estás en línea", Toast.LENGTH_SHORT).show();
+                        /*Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
+                        onLocationChanged(location); Este sirve para obtener la ubicación una sola vez*/
+
+
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                        Toast.makeText(getContext(), "Permiso denegado "+permissionDeniedResponse.getPermissionName(), Toast.LENGTH_SHORT).show();
+                        showSettingsDialog();
+
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+                    }
+                }).check();
+
         recyclerView = view.findViewById(R.id.rv2);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -111,6 +249,9 @@ public class Inicio extends Fragment {
         getDataFromFirebase();
         return view;
     }
+    //https://www.androidhive.info/2015/02/android-location-api-using-google-play-services/
+
+
 
     private void getDataFromFirebase() {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -185,4 +326,63 @@ public class Inicio extends Fragment {
         }
         dataholder2 = new ArrayList<>();
     }
+
+    private final LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(final Location location) {
+            double longitude = location.getLongitude();
+            double latitude = location.getLatitude();
+            txtLat.setText("Latitud: "+latitude);
+            txtLong.setText("Longitud: "+longitude);
+            geoFire.setLocation(FirebaseAuth.getInstance().getCurrentUser().getUid(), new GeoLocation(latitude, longitude),
+                    (key, error) -> {
+                        if(error != null)
+                            Snackbar.make(getView(), error.getMessage(), Snackbar.LENGTH_LONG).show();
+
+                    });
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
+
+
+    /* Recuerda agregar el Implements LocationListener
+    @Override
+    public void onLocationChanged(Location location) {
+        double longitude = location.getLongitude();
+        double latitude = location.getLatitude();
+        txtLat.setText("Latitud: "+latitude);
+        txtLong.setText("Longitud: "+longitude);
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+     */
 }
