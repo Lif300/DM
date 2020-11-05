@@ -13,11 +13,13 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +32,8 @@ import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -67,7 +71,10 @@ import static android.content.ContentValues.TAG;
 public class Inicio extends Fragment{
     private FirebaseUser firebaseUser;
     private String uid;
+    private Handler myHandler = new Handler();
+    int delay = 2000;
     TextView txtLong, txtLat;
+    private ArrayList<String> nearbyUsers = new ArrayList<>();
 
 
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -138,6 +145,7 @@ public class Inicio extends Fragment{
 
     }
 
+
     private void showSettingsDialog() { //Mensaje de dialogo por si no acepta los permisos
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Permiso requerido");
@@ -183,21 +191,60 @@ public class Inicio extends Fragment{
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_inicio, container, false);
+        /*Handler handler = new Handler();
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+
+                handler.postDelayed(this,2000);
+
+            }
+        };
+        task.run();*/
+        myHandler.postDelayed(new Runnable() {
+            public void run() {
+                Log.d(TAG, "Este mensaje se imprime cada 2 seg.");
+                if(txtLat.getText().toString().equals("Latitud")){
+                    Toast.makeText(getContext(), "Artículos cargandose", Toast.LENGTH_SHORT).show();
+                }else{
+                    cargarDatos();// Do your work here
+                    for (String usersID : nearbyUsers){
+                        Log.d(TAG, "Estos son los ID encontrados: "+usersID);
+                    }
+                    getDataFromFirebase();
+                }
+                myHandler.postDelayed(this, delay);
+            }
+        }, delay);
         onlineRef = FirebaseDatabase.getInstance().getReference().child(".info/connected");
         usuarioslocalizacionRef = FirebaseDatabase.getInstance().getReference("UsuariosLocation");
         currentUserRef = FirebaseDatabase.getInstance().getReference("UsuariosLocation").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
         geoFire = new GeoFire(usuarioslocalizacionRef);
         registerOnlyneSystem();
-
-
         txtLong = view.findViewById(R.id.txtLongitud);
         txtLat = view.findViewById(R.id.txtLatitud);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);recyclerView = view.findViewById(R.id.rv2);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        myRef = FirebaseDatabase.getInstance().getReference();
+        dataholder2= new ArrayList<>();
+        //getDataFromFirebase();
         //Permisos para la ubicación.
         Dexter.withContext(getContext())
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -219,11 +266,11 @@ public class Inicio extends Fragment{
                             // for ActivityCompat#requestPermissions for more details.
                             return;
                         }
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000,
-                                3, mLocationListener);
-                        Toast.makeText(getContext(), "Estás en línea", Toast.LENGTH_SHORT).show();
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+                                0, mLocationListener);
                         /*Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
                         onLocationChanged(location); Este sirve para obtener la ubicación una sola vez*/
+
 
 
                     }
@@ -241,18 +288,96 @@ public class Inicio extends Fragment{
                     }
                 }).check();
 
-        recyclerView = view.findViewById(R.id.rv2);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        myRef = FirebaseDatabase.getInstance().getReference();
-        dataholder2= new ArrayList<>();
-        getDataFromFirebase();
         return view;
     }
     //https://www.androidhive.info/2015/02/android-location-api-using-google-play-services/
 
+    public void cargarDatos(){
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        uid = firebaseUser.getUid();
+        String muserLatitde = txtLat.getText().toString();
+        String muserLongitude = txtLong.getText().toString();
+        double userLatitde = Double.parseDouble(muserLatitde);
+        double userLongitude = Double.parseDouble(muserLongitude);
+
+        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(userLatitde, userLongitude), 40);
+        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+            @Override
+            public void onKeyEntered(String key, GeoLocation location) {
+                nearbyUsers.add(key);
+            }
+
+            @Override
+            public void onKeyExited(String key) {
+                nearbyUsers.remove(key);
+            }
+
+            @Override
+            public void onKeyMoved(String key, GeoLocation location) {
+
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+
+            }
+
+            @Override
+            public void onGeoQueryError(DatabaseError error) {
+
+            }
+        });
+    }
+/*
+    private void awanta(){
+        Query locationDataQuery = myRef.child("Usuarios");
+        locationDataQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ClearAll();
+                for(DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    String yolo = snapshot1.getKey();
+                    Log.d(TAG, "Current users "+yolo);
+                   // Log.d(TAG, "KEY: "+key);
+                    Log.d(TAG, "UID: "+FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    //String currentUser = snapshot.child(key).child("nombre").getValue(String.class);
+                    //Toast.makeText(getContext(), "   "+currentUser, Toast.LENGTH_SHORT).show();
+
+                    if(snapshot1.getKey().equals(uid) & snapshot1.getKey().equals(key)){
+                        for(DataSnapshot snapshot2 : snapshot1.child("articulos").getChildren()){
+                            String currentArticulos = snapshot2.getKey();
+                            //Toast.makeText(getContext(), "   "+currentUser, Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "USUARIO DE LA BD: "+currentArticulos);
+                            datamodel2 datamodel2 = new datamodel2();
+                            datamodel2.setPushid(currentArticulos);
+                            datamodel2.setImageurl(snapshot2.child("imageurl").getValue(String.class));
+                            datamodel2.setDescr(snapshot2.child("descripcion").getValue(String.class));
+                            datamodel2.setHeader(snapshot2.child("nombre").getValue(String.class));
+                            datamodel2.setPrec(snapshot2.child("precio").getValue(String.class));
+                            datamodel2.setUserid(snapshot1.getKey());
+                            String nombreCompleto = snapshot1.child("nombre").getValue(String.class);
+                            nombreCompleto = nombreCompleto + " " + snapshot1.child("apellido").getValue(String.class);
+                            datamodel2.setUsuario("En venta por: "+nombreCompleto);
+                            dataholder2.add(datamodel2); //se agregan al datamodel.
+                        }
+
+                    }
 
 
+                }
+                myadapter2 = new myadapter2(dataholder2);
+                recyclerView.setAdapter(new myadapter2(dataholder2));
+                myadapter2.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+*/
     private void getDataFromFirebase() {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         uid = firebaseUser.getUid();
@@ -268,7 +393,7 @@ public class Inicio extends Fragment{
                     Log.d(TAG, "Todos los ID: " + currentUser);
                     /**/
 
-                    if(!snapshot1.getKey().equals(uid)){
+                    if(!snapshot1.getKey().equals(uid) & nearbyUsers.contains(snapshot1.getKey())){
                         //String currentArticulos = snapshot1.child("articulos").getKey();
                         //Log.d(TAG, "Articulos push.id: " + currentArticulos);
                         for(DataSnapshot snapshot2 : snapshot1.child("articulos").getChildren()){
@@ -299,7 +424,7 @@ public class Inicio extends Fragment{
                             dataholder2.add(datamodel2); //se agregan al datamodel.
                             */
                     }else{
-                        Log.d(TAG, "Los 2 valores");
+                        Log.d(TAG, "No existe ese usuario o es el mismo al UID");
                     }
 
                 }
@@ -332,14 +457,16 @@ public class Inicio extends Fragment{
         public void onLocationChanged(final Location location) {
             double longitude = location.getLongitude();
             double latitude = location.getLatitude();
-            txtLat.setText("Latitud: "+latitude);
-            txtLong.setText("Longitud: "+longitude);
+            txtLat.setText(""+latitude);
+            txtLong.setText(""+longitude);
+
             geoFire.setLocation(FirebaseAuth.getInstance().getCurrentUser().getUid(), new GeoLocation(latitude, longitude),
                     (key, error) -> {
                         if(error != null)
                             Snackbar.make(getView(), error.getMessage(), Snackbar.LENGTH_LONG).show();
 
                     });
+            //cargarDatos();
         }
 
         @Override
@@ -366,6 +493,7 @@ public class Inicio extends Fragment{
         double latitude = location.getLatitude();
         txtLat.setText("Latitud: "+latitude);
         txtLong.setText("Longitud: "+longitude);
+
 
     }
 

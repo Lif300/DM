@@ -2,10 +2,12 @@ package com.example.marketplaceproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,6 +33,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.content.ContentValues.TAG;
+
 public class SideBarActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -40,6 +44,8 @@ public class SideBarActivity extends AppCompatActivity {
     private String uid;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference imageload = firebaseDatabase.getReference();
+    private Handler myHandler = new Handler();
+    int delay = 3000;
 
 
 
@@ -101,9 +107,14 @@ public class SideBarActivity extends AppCompatActivity {
     }
 
     private void logout() {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(SideBarActivity.this, LoginActivity.class));
-        finish();
+        myHandler.postDelayed(new Runnable() {
+            public void run() {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(SideBarActivity.this, LoginActivity.class));
+                finish();
+                myHandler.postDelayed(this, delay);
+            }
+        }, delay);
     }
 
     private void llenarHeader() {
